@@ -1,0 +1,11 @@
+node_modules/
+.impeccable/
+.env
+.env.*
+!.env.example
+*.log
+
+# Local design and review notes
+/DESIGN.md
+/PRODUCT.md
+/design-qa.md

@@ -16,3 +16,7 @@ The Top 5 pilots leaderboard stores the five highest registered player scores in
 
 Leaderboard eligibility: only fully manual attempts qualify. Starting with autopilot or switching to it during a flight makes that attempt ineligible, even if the player switches back. Existing saved autopilot entries are excluded from rankings. Autopilot still displays an unsaved practice score in the result dialog.
 
+
+## Deploy on Vercel
+Select Other as the application/framework preset and keep the root directory as ./ . The tracked vercel.json sets the build command to npm run build and the output directory to dist. Use npm install for the install command if an override is needed. No environment variables are required. The build copies only public app files and the required Three.js modules; the local preview server is not deployed. Leaderboards remain browser-local on the deployed domain.
+

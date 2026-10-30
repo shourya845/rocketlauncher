@@ -1,1 +1,15 @@
-{"name":"rocket-launcher","version":"1.0.0","private":true,"type":"module","scripts":{"dev":"node server.js","start":"node server.js","test":"node --test"},"dependencies":{"three":"^0.186.1"}}
+{
+  "name": "rocket-launcher",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "test": "node --test",
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "three": "^0.186.1"
+  }
+}

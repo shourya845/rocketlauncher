@@ -1,22 +1,74 @@
 # Rocket Launcher
 
-Run `npm install` once, then `npm start` and open http://localhost:3000. Run `npm test` for physics checks.
+A 3D browser game where you guide a rocket back to its landing pad. Balance thrust, tilt, fuel, and time to stick the landing — preferably without turning the test range into a fireworks show.
 
-The Three.js 3D scene is served locally; no build step is required. Drag the scene to orbit, scroll or pinch to zoom, and use Overview, Follow rocket, or Top down to reset the camera. Camera presets also work with keyboard focus and Enter. WebGL2 and browser hardware acceleration are required.
+## Features
 
-The sunset test facility is inspired by the user's video: a white rocket with gold trim, a checker band and landing legs, illuminated circular pad, hangars, mountains, engine flames and touchdown dust. The scene is interactive geometry rather than prerecorded footage. Physics meters are scaled uniformly into scene units; the model and facility are illustrative, not dimensionally calibrated hardware.
+- Interactive Three.js sunset launch facility with orbit, follow, and top-down camera views
+- Manual flight controls for keyboard and touch
+- Scripted autopilot mode for practice and demonstration
+- Adjustable landing, fuel, and time reward values
+- End-of-flight score, landing advice, and replay flow
+- Local Top 5 leaderboard for fully manual flights only
+- Static Vercel-ready build with no environment variables required
 
-Select Manual flight and use the arrow keys or touch controls. Autopilot is a fixed feedback controller, not a trained AI. Reward sliders affect scoring, not pilot behavior. Flight still uses simplified planar physics (horizontal and vertical movement), visualized in 3D, rather than a full six-axis dynamics engine or Gymnasium's LunarLander. Fonts load from Google Fonts with local fallbacks. Flight history lasts for the current page session.
+## Run locally
 
-The controller occupies its own dock below the 3D viewport so it cannot cover the rocket or landing pad. Scores appear in the in-game badge and in a native dialog at the end of a flight. The dialog includes landing advice and Fly again, which preserves pilot mode and reward settings. Close or Escape returns to the completed flight.
+```bash
+npm install
+npm start
+```
 
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The Top 5 pilots leaderboard stores the five highest registered player scores in browser localStorage (one best result per name, case-insensitive). The result popup offers opt-in score registration; Fly again skips it. Scores are local to this browser and site address, not shared across players' devices. Name length and stored records are validated, names render as text, and storage failures show a retry message. Pilot mode is labeled; custom reward values affect comparability. Test rankings, duplicate names, invalid data and storage roundtrips with npm test.
+## Controls
 
+| Action | Keyboard | Touch / on-screen control |
+| --- | --- | --- |
+| Tilt left | Left arrow | Left button |
+| Thrust | Up arrow | Thrust button |
+| Tilt right | Right arrow | Right button |
+| Move camera | Drag scene | Drag scene |
+| Zoom camera | Mouse wheel | Pinch |
 
-Leaderboard eligibility: only fully manual attempts qualify. Starting with autopilot or switching to it during a flight makes that attempt ineligible, even if the player switches back. Existing saved autopilot entries are excluded from rankings. Autopilot still displays an unsaved practice score in the result dialog.
+Choose **Manual flight** to pilot the rocket yourself, or **Autopilot** to watch the scripted landing controller. The autopilot is a demo controller, not a trained AI model.
 
+## Scoring and leaderboard
 
-## Deploy on Vercel
-Select Other as the application/framework preset and keep the root directory as ./ . The tracked vercel.json sets the build command to npm run build and the output directory to dist. Use npm install for the install command if an override is needed. No environment variables are required. The build copies only public app files and the required Three.js modules; the local preview server is not deployed. Leaderboards remain browser-local on the deployed domain.
+Landing rewards, fuel penalties, and time penalties can be adjusted in the game. The result dialog shows the score and tells the player what to improve for the next landing.
 
+Only flights completed entirely in **Manual flight** can be registered on the Top 5 leaderboard. Any flight that starts in autopilot or switches to it is shown as practice only. Scores are saved in the browser's local storage, so they stay on that browser and site address; they are not shared online.
+
+## Development
+
+```bash
+npm test
+npm run build
+```
+
+`npm test` checks the flight physics and leaderboard rules. `npm run build` produces the deployable static files in `dist/`.
+
+## Deploy to Vercel
+
+Import this repository into Vercel and use these settings:
+
+- Framework preset: **Other**
+- Root directory: `./`
+- Build command: `npm run build`
+- Output directory: `dist`
+
+The included `vercel.json` already configures the build, and no environment variables are needed.
+
+## Project structure
+
+| File | Purpose |
+| --- | --- |
+| `app.js` | Game interface, controls, scoring, and result dialog |
+| `physics.js` | Simplified rocket-flight simulation and autopilot logic |
+| `scene3d.js` | Three.js rocket, landing pad, and test-range scene |
+| `leaderboard.js` | Manual-flight score validation and Top 5 ranking |
+| `build.js` | Static deployment build |
+
+## Notes
+
+The simulation uses simplified two-dimensional flight physics presented in a 3D scene. It is designed as a playful landing challenge, not as a real rocket-flight simulator.
